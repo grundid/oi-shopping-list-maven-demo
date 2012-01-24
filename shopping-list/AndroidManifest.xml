@@ -41,7 +41,24 @@
 	
 	<uses-sdk android:minSdkVersion="3" android:targetSdkVersion="15"/>
 	<uses-feature android:name="android.hardware.touchscreen" android:required="false"/>
-	 
+	<uses-permission android:name="android.permission.NFC"/>
+	<!-- required for MyBackupPro: -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/> 
+    
+	<uses-permission android:name="org.openintents.shopping.READ_PERMISSION" />
+	<uses-permission android:name="org.openintents.shopping.WRITE_PERMISSION" />
+			
+	<permission android:name="org.openintents.shopping.READ_PERMISSION"
+		android:label="@string/oi_shopping_permission_read"
+		android:description="@string/oi_shopping_permission_read_descr"
+		android:permissionGroup="android.permission-group.PERSONAL_INFO"
+		android:protectionLevel="normal" />
+	<permission android:name="org.openintents.shopping.WRITE_PERMISSION"
+		android:label="@string/oi_shopping_permission_write"
+		android:description="@string/oi_shopping_permission_write_descr"
+		android:permissionGroup="android.permission-group.PERSONAL_INFO"
+		android:protectionLevel="normal" />
+				 
 	<application android:icon="@drawable/ic_launcher_shoppinglist" android:label="@string/app_name" android:debuggable="true"
 		android:backupAgent="ShoppingBackupAgent">
 	
@@ -75,7 +92,7 @@
 		
 		<!-- Shopping activity -->
 		<activity android:name=".ShoppingActivity"
-			android:label="@string/app_name" 
+			android:label="@string/app_name" android:launchMode="singleTop" 
 			android:windowSoftInputMode="stateHidden|adjustResize" >
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN" />
@@ -111,9 +128,15 @@
                 <data android:mimeType="org.openintents.type/string.arraylist.shopping" />
             </intent-filter>
              -->
+			<intent-filter>
+				<action android:name="android.nfc.action.NDEF_DISCOVERED"/>
+				<category android:name="android.intent.category.DEFAULT"/>
+				<data android:mimeType="text/x-shopping"/>
+			</intent-filter>
+             
 		</activity>
 		
-		<activity android:name=".ui.ShoppingListsActivity">
+		<activity android:name=".ui.ShoppingListsActivity" android:launchMode="singleTop" >
 			<intent-filter>
 				<action android:name="android.intent.action.VIEW" />
 				<action android:name="android.intent.action.PICK" />
@@ -247,21 +270,5 @@
          	</intent-filter>
      	</activity>
 	</application>	 
-	
-	<!-- required for MyBackupPro: -->
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/> 
-    
-	<uses-permission android:name="org.openintents.shopping.READ_PERMISSION" />
-	<uses-permission android:name="org.openintents.shopping.WRITE_PERMISSION" />
-	<permission android:name="org.openintents.shopping.READ_PERMISSION"
-		android:label="@string/oi_shopping_permission_read"
-		android:description="@string/oi_shopping_permission_read_descr"
-		android:permissionGroup="android.permission-group.PERSONAL_INFO"
-		android:protectionLevel="normal" />
-	<permission android:name="org.openintents.shopping.WRITE_PERMISSION"
-		android:label="@string/oi_shopping_permission_write"
-		android:description="@string/oi_shopping_permission_write_descr"
-		android:permissionGroup="android.permission-group.PERSONAL_INFO"
-		android:protectionLevel="normal" />
-	
+
 </manifest>
